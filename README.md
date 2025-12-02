@@ -46,6 +46,8 @@ A clean and production-ready Laravel API implementing:
 ### 1. Product
 **Route:** `GET /api/product/{productId}`  
 **Purpose:** Get product details with real-time stock availability.
+
+
 ```json
 {
     "id": "4",
@@ -53,17 +55,23 @@ A clean and production-ready Laravel API implementing:
     "price": "1000.00",
     "stock": 3
 }
+```
+
+---
 
 ### 2. Hold
 **Route:** `POST /api/holds`  
-**Purpose:** Create a temporary reservation for a product.
-          ** 
+**Purpose:** Create a temporary reservation for a product. 
 **Request Example:**
+
+
 ```json
 {
   "product_id": 4,
   "qty": 2
 }
+```
+---
 
 ### 3. Order
 **Route:** `POST /api/orders`  
@@ -73,7 +81,9 @@ A clean and production-ready Laravel API implementing:
 {
   "hold_id": 10
 }
+```
 
+---
 
 ### 4. Payment Webhook
 **Route:** `POST /api/payments/webhook`  
@@ -85,7 +95,7 @@ A clean and production-ready Laravel API implementing:
   "order_id": 5,
   "status": "success"
 }
-
+```
 
 
 
