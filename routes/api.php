@@ -13,8 +13,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-// API For Testing
-Route::get('test', [ApiController::class, 'test'])->name('api.test');
 
 // Requirements:
     // 1- GET /api/products/{id}
