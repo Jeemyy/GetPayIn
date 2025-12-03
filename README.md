@@ -326,12 +326,3 @@ php artisan test --filter=testName
 - `processed_at` - Processing timestamp
 
 ---
-
-## 👤 Author
-
-**Jeemyy**
-
-- GitHub: [@Jeemyy](https://github.com/Jeemyy)
-
----
-
