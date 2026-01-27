@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Hold;
 use App\Models\Order;
+use App\Traits\ApiTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,6 +13,7 @@ use Illuminate\Validation\ValidationException;
 
 class OrderController extends Controller
 {
+    use ApiTrait;
     public function createOrder(Request $request){
         try {
             $data = $request->validate([
@@ -54,16 +56,12 @@ class OrderController extends Controller
                 return $order;
             });
 
-            return response()->json([
-                'order_id' => $order->id,
-                'status' => $order->status,
-            ], 201);
+            $orderId = $order->id;
+            $order = Order::find($orderId);
+            return $this->returnData('Order ID',$orderId);
             
         } catch (ValidationException $e) {
-            return response()->json([
-                'error' => 'Validation Error',
-                'messages' => $e->errors(),
-            ], 422);
+            return $this->returnError('No Query In Here!: Something Wrong');
         } 
     }
 }

@@ -7,12 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Models\Hold;
 use App\Models\Product;
+use App\Traits\ApiTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 
 class HoldController extends Controller
 {
     //
+    use ApiTrait;
     public function createHold(Request $request)
     {
         try {
@@ -56,15 +58,12 @@ class HoldController extends Controller
             // Clear cache
             Cache::forget("hold_sum_{$productId}");
 
-            return response()->json([
-                'hold_id'    => $hold->id,
-                'expires_at' => $hold->expires_at,
-            ], 201);
+            $holdId = $hold->id;
+            $holdExpiresAt = $hold->expires_at;            
+            return $this->returnData('Hold', ['Hold ID' => $holdId, 'Expires At' => $holdExpiresAt]);
+
         } catch (ValidationException $e) {
-            return response()->json([
-                'error' => 'Validation failed',
-                'messages' => $e->errors(),
-            ], 422);
+            return $this->returnError($e->getMessage());
         }
     }
 }

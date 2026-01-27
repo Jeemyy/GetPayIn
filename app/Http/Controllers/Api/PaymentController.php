@@ -18,8 +18,8 @@ class PaymentController extends Controller
         try{
             $data = $request->validate([
                 'idempotency' => "required|string",
-                'order_id' => 'required|exists:order,id',
-                'status' => 'required|in: success, failur',
+                'order_id' => 'required|exists:orders,id',
+                'status' => 'required|in:success,failur',
             ]);
             $idEmpotency = $data['idempotency'];
             $orderId = (int) $data['order_id'];

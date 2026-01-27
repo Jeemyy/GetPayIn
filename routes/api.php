@@ -8,18 +8,22 @@ use App\Http\Controllers\Api\HoldController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PaymentController;
 
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
-
 // Requirements:
+Route::name('api.')->group(function () {
     // 1- GET /api/products/{id}
-Route::get('/product/{productId}', [ProductController::class, 'getProductById']);
+    Route::name('product')->controller(ProductController::class)->group(function () {
+        Route::get('/product/{productId}', 'getProductById');
+    });
     // 2- POST /api/holds { product_id, qty }
-Route::post('/holds', [HoldController::class, 'createHold']);
+    Route::name('create.hold')->controller(HoldController::class)->group(function () {
+        Route::post('/holds', 'createHold');
+    });
     // 3- POST /api/orders { hold_id }
-Route::post('orders', [OrderController::class, 'createOrder']);
+        Route::name('create.order')->controller(OrderController::class)->group(function () {
+            Route::post('orders', 'createOrder');
+    });
     // 4- POST /api/payments/webhook
-Route::post('/payments/webhook', [PaymentController::class, 'createPaymentWebHook']);
+    Route::name('create.payment.webhook')->controller(PaymentController::class)->group(function () {
+        Route::post('/payments/webhook', 'createPaymentWebHook');
+    });
+});
