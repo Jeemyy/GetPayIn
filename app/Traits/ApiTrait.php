@@ -2,9 +2,14 @@
 
 namespace App\Traits;
 
-trait ApiTrait{
+use Illuminate\Validation\ValidationException;
+
+
+trait ApiTrait
+{
     ## ************ Error Response ************ ##
-    public function returnError($msg){
+    public function returnError($msg)
+    {
         return response()->json([
             'status'        => false,
             'Error Code'    => 'E001',
@@ -12,7 +17,8 @@ trait ApiTrait{
         ], 500);
     }
     ## ************ Success Response ************ ##
-    public function returnSuccess($msg){
+    public function returnSuccess($msg)
+    {
         return response()->json([
             'status'        => true,
             'Error Code'    => '0',
@@ -20,7 +26,8 @@ trait ApiTrait{
         ], 200);
     }
     ## ************  Get Data ************ ##
-    public function returnData($key, $value, $msg=null){
+    public function returnData($key, $value, $msg = null)
+    {
         $msg = "Return Data Succussfully";
         return response()->json([
             'status'        => true,
@@ -29,4 +36,11 @@ trait ApiTrait{
             $key            => $value,
         ], 200);
     }
+    ## ************  Validation Message ************ ##
+    public function returnValidation($validateErr = []){
+        throw ValidationException::withMessages([
+            $validateErr
+        ]);
+    }
+
 }

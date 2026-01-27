@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\DB;
 use App\Models\PaymentKey;
 use App\Models\Order;
 use App\Models\Hold;
-
+use App\Traits\ApiTrait;
 
 class PaymentController extends Controller
 {
-    //
+    use ApiTrait;
     public function createPaymentWebHook(Request $request){
         try{
             $data = $request->validate([
@@ -68,18 +68,16 @@ class PaymentController extends Controller
                             $hold->save();
                         }
                     }
-                    return response()->json([
-                        'msg' => "The Payment Process Is Success",
-                        'order_status' => $order->status,
-                    ], 201);
+                    $msg = [
+                        "Payment" => "The Payment Process Is Success",
+                        'Order Status' => $order->status
+                    ];
+                    return $this->returnSuccess($msg);
                 }
             );
             return $result;
         }catch(ValidationException $e){
-            return response()->json([
-                'error' => "Validation Error",
-                'msg' => $e->errors(),
-            ], 422);
+            return $this->returnError("Something Woring");
         }
     }
 }
